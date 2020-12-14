@@ -1,57 +1,63 @@
-import React, { Component } from 'react';
-import { auth } from '../../firebase';
-import { toast } from 'react-toastify';
+import React, { useState, useEffect } from "react";
+import { auth } from "../../firebase";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
-export default class Register extends Component {
+const Register = ({ history }) => {
+  const [email, setEmail] = useState("");
 
-    constructor() {
-        super();
-        this.state = {
-            email: ''
-        }
-    }
+  const { user } = useSelector((state) => ({ ...state }));
 
-    handleSubmit = async (e) => {
-        e.preventDefault();
-        const config = {
-            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-            handleCodeInApp: true
-        }
+  useEffect(() => {
+    if (user && user.token) history.push("/");
+  }, [user]);
 
-        await auth.sendSignInLinkToEmail(this.state.email, config);
-        toast.success(`Email is sent to ${this.state.email}. Click the link to complete yor registration.`);
-
-        window.localStorage.setItem('emailForRegistration', this.state.email);
-
-        this.setState({email: ''});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("ENV --->", process.env.REACT_APP_REGISTER_REDIRECT_URL);
+    const config = {
+      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+      handleCodeInApp: true,
     };
 
-    registerForm = () => (
-        <form onSubmit={this.handleSubmit}>
-            <input
-                type="email"
-                className="form-control"
-                value={this.state.email}
-                onChange={ e => this.setState({email: e.target.value})}
-                autoFocus
-            />
-            <button type="submit" className="btn btn-raised">
-                Register
-            </button>
-        </form>
+    await auth.sendSignInLinkToEmail(email, config);
+    toast.success(
+      `Email is sent to ${email}. Click the link to complete your registration.`
     );
+    // save user email in local storage
+    window.localStorage.setItem("emailForRegistration", email);
+    // clear state
+    setEmail("");
+  };
 
-    render() {
-        return (
-            <div className="container p-5">
-                <div className="row">
-                    <div className="col-md-6 offset-md-3">
-                        <h4>Register</h4>
-                        { this.registerForm() }
-                    </div>
-                </div>
+  const registerForm = () => (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        className="form-control"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Your email"
+        autoFocus
+      />
 
-            </div>
-        )
-    }
-}
+      <br />
+      <button type="submit" className="btn btn-raised">
+        Register
+      </button>
+    </form>
+  );
+
+  return (
+    <div className="container p-5">
+      <div className="row">
+        <div className="col-md-6 offset-md-3">
+          <h4>Register</h4>
+          {registerForm()}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
