@@ -22,7 +22,7 @@ import AdminRoute from "./components/routes/admin.route";
 
 import AdminDashboard from "./pages/admin/admin.dashboard";
 import CategoryCreate from "./pages/admin/category/category.create";
-
+import CategoryUpdate from "./pages/admin/category/category.update";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -63,6 +63,11 @@ const App = () => {
       <Header/>
       <ToastContainer/>
       <Switch>
+        <AdminRoute
+          exact
+          path="/admin/category/:slug"
+          component={CategoryUpdate}
+        />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <UserRoute exact path="/user/password" component={Password} />
