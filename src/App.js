@@ -27,6 +27,8 @@ import CategoryUpdate from "./pages/admin/category/category.update";
 import SubCreate from "./pages/admin/sub/sub.create";
 import SubUpdate from "./pages/admin/sub/sub.update";
 
+import ProductCreate from "./pages/admin/product/product.create";
+
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth.functions";
@@ -66,6 +68,7 @@ const App = () => {
       <Header/>
       <ToastContainer/>
       <Switch>
+        <AdminRoute exact path="/admin/product" component={ProductCreate} />
         <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
         <AdminRoute exact path="/admin/sub" component={SubCreate} />
         <AdminRoute
