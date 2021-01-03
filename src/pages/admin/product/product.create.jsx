@@ -11,11 +11,14 @@ import ProductCreateForm from "../../../components/forms/product.create";
 
 import { getCategories, getCategorySubs } from "../../../functions/category.functions";
 
+import FileUpload from "../../../components/forms/file.upload";
+
+import { LoadingOutlined } from "@ant-design/icons";
 
 const initialState = {
-    title: "Macbook Pro",
+    title: "",
     description: "This is the best Apple product",
-    price: "45000",
+    price: "4000",
     categories: [],
     category: "",
     subs: [],
@@ -33,6 +36,7 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // redux
   const { user } = useSelector((state) => ({ ...state }));
@@ -83,10 +87,22 @@ const ProductCreate = () => {
         </div>
 
         <div className="col-md-10">
-          <h4>Product create</h4>
+        {loading ? (
+            <LoadingOutlined className="text-danger h1" />
+          ) : (
+            <h4>Product create</h4>
+          )}
           <hr />
 
-          {JSON.stringify(values.subs)}
+          {JSON.stringify(values.images)}
+
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
 
           <ProductCreateForm
             handleSubmit={handleSubmit}
