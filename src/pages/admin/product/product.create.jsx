@@ -17,18 +17,18 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 const initialState = {
     title: "",
-    description: "This is the best Apple product",
-    price: "4000",
+    description: "",
+    price: "",
     categories: [],
     category: "",
     subs: [],
-    shipping: "Yes",
-    quantity: "50",
+    shipping: "",
+    quantity: "",
     images: [],
     colors: ["Black", "Brown", "Silver", "White", "Blue"],
     brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
-    color: "White",
-    brand: "Apple",
+    color: "",
+    brand: "",
 };
 
 const ProductCreate = () => {
@@ -52,7 +52,7 @@ const ProductCreate = () => {
     e.preventDefault();
     createProduct(values, user.token)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       window.alert(`"${res.data.title}" is created`);
     window.location.reload();
     })
@@ -73,7 +73,7 @@ const ProductCreate = () => {
     console.log("CLICKED CATEGORY", e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATGORY CLICK", res);
+      // console.log("SUB OPTIONS ON CATGORY CLICK", res);
       setSubOptions(res.data);
     });
     setShowSub(true);
@@ -94,7 +94,7 @@ const ProductCreate = () => {
           )}
           <hr />
 
-          {JSON.stringify(values.images)}
+          {/* {JSON.stringify(values.images)} */}
 
           <div className="p-3">
             <FileUpload
