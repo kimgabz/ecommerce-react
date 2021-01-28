@@ -58,10 +58,21 @@ const Shop = () => {
     });
   };
 
+  useEffect(() => {
+    loadAllProducts();
+    // fetch categories
+    getCategories().then((res) => setCategories(res.data));
+    // fetch subcategories
+    getSubs().then((res) => setSubs(res.data));
+  }, []);
+
   // 2. load products on user search input
   useEffect(() => {
     const delayed = setTimeout(() => {
       fetchProducts({ query: text });
+      if (!text) {
+        loadAllProducts();
+      }
     }, 300);
     return () => clearTimeout(delayed);
   }, [text]);
@@ -72,16 +83,6 @@ const Shop = () => {
     fetchProducts({ price });
   }, [ok]);
 
-  useEffect(() => {
-
-    // fetch categories
-    getCategories().then((res) => setCategories(res.data));
-    // fetch subcategories
-    getSubs().then((res) => setSubs(res.data));
-
-    loadAllProducts();
-  }, []);
-  
   const fetchProducts = (arg) => {
     fetchProductsByFilter(arg).then((res) => {
       setProducts(res.data);

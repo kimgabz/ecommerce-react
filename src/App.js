@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Header from './components/navigation/Header';
 
+import SideDrawer from "./components/drawer/side.drawer";
+
 import Home from './pages/Home';
 
 import Login from './pages/auth/Login';
@@ -30,6 +32,9 @@ import SubUpdate from "./pages/admin/sub/sub.update";
 import ProductCreate from "./pages/admin/product/product.create";
 import AllProducts from "./pages/admin/product/all.products";
 import ProductUpdate from "./pages/admin/product/product.update";
+import CreateCouponPage from "./pages/admin/coupon/coupon.create";
+
+import Payment from "./pages/Payment";
 import Product from "./pages/Product";
 
 import CategoryHome from "./pages/category/category.home";
@@ -41,6 +46,9 @@ import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth.functions";
 
 import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -75,6 +83,7 @@ const App = () => {
   return (
     <>
       <Header/>
+      <SideDrawer />
       <ToastContainer/>
       <Switch>
         <AdminRoute
@@ -93,20 +102,24 @@ const App = () => {
         />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
-        <UserRoute exact path="/user/password" component={Password} />
+        <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
 
+        <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
         <UserRoute exact path="/user/history" component={History} />
+        <UserRoute exact path="/checkout" component={Checkout} />
+        <UserRoute exact path="/payment" component={Payment} />
 
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/sub/:slug" component={SubHome} />
-
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+
         <Route exact path="/shop" component={Shop} />
+        <Route exact path="/cart" component={Cart} />
         <Route exact path="/" component={Home} />
 
       </Switch>

@@ -18,7 +18,7 @@ const SubHome = ({ match }) => {
       setProducts(res.data.products);
       setLoading(false);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="container-fluid">
